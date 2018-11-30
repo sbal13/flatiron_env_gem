@@ -2,4 +2,113 @@
 
 require 'flatiron_env'
 
-FlatironEnv::Validator.get_and_run_script 
+FlatironEnv::CLI.validation_header
+FlatironEnv::CLI.delimiter
+
+## 1. Uninstall Learn IDE
+## TODO
+
+## 2. Install Xcode Command Line Tools
+# https://apple.stackexchange.com/questions/219507/best-way-to-check-in-bash-if-command-line-tools-are-installed
+# https://stackoverflow.com/questions/15371925/how-to-check-if-command-line-tools-is-installed
+# https://stackoverflow.com/questions/21272479/how-can-i-find-out-if-i-have-xcode-commandline-tools-installed
+FlatironEnv::CLI.print_table_results "Xcode Command Line Tools", 'type xcode-select >&- && xpath=$( xcode-select --print-path ) && test -d "${xpath}" && test -x "${xpath}"'
+FlatironEnv::CLI.delimiter
+
+## 3. N/A
+
+## 4. Homebrew
+# https://stackoverflow.com/questions/21577968/how-to-tell-if-homebrew-is-installed-on-mac-os-x
+# https://stackoverflow.com/questions/592620/how-to-check-if-a-program-exists-from-a-bash-script
+FlatironEnv::CLI.print_table_results "Homebrew", "command -v brew >/dev/null 2>&1"
+FlatironEnv::CLI.delimiter
+
+## 5. git
+# https://stackoverflow.com/questions/12254076/how-do-i-show-my-global-git-config
+FlatironEnv::CLI.print_table_results "Installed git", "command -v git >/dev/null 2>&1 && git version | grep -q 'git version'"
+FlatironEnv::CLI.print_table_results "Github user config", "command -v git >/dev/null 2>&1 && git config --list | grep -q 'github.user='"
+FlatironEnv::CLI.print_table_results "Github email config", "command -v git >/dev/null 2>&1 && git config --list | grep -q 'github.email='"
+FlatironEnv::CLI.delimiter
+
+## 6. Support Libraries
+FlatironEnv::CLI.print_table_results "Installed gmp", "command -v brew >/dev/null 2>&1 && brew list | grep -q 'gmp'"
+FlatironEnv::CLI.print_table_results "Installed gnupg", "command -v brew >/dev/null 2>&1 && brew list | grep -q 'gnupg'"
+FlatironEnv::CLI.delimiter
+
+## 7. Ruby Version Manager (rvm)
+FlatironEnv::CLI.print_table_results "Installed RVM", "command -v rvm >/dev/null 2>&1 && which rvm | grep -q '/Users/.*/\.rvm/bin/rvm'"
+FlatironEnv::CLI.print_table_results "Default RVM (2.3.3)", "command -v rvm >/dev/null 2>&1 && rvm list | grep -Fq '=* ruby-2.3.3 [ x86_64 ]'"
+FlatironEnv::CLI.print_table_results "Test RVM PATH", "command -v rvm >/dev/null 2>&1 && rvm list | grep -Fqv 'Warning! PATH'"
+FlatironEnv::CLI.delimiter
+
+## 8. Gems
+FlatironEnv::CLI.print_table_results "Gem: learn-co", "command -v gem >/dev/null 2>&1 && gem list | grep -q 'learn-co'"
+FlatironEnv::CLI.print_table_results "Gem: bundler", "command -v gem >/dev/null 2>&1 && gem list | grep -q 'bundler'"
+FlatironEnv::CLI.delimiter
+
+## 9. Learn
+## See Student Configuration section.
+
+## 10. Atom
+FlatironEnv::CLI.print_table_results "Installed Atom", "command -v atom >/dev/null 2>&1 && atom -v | grep -q 'Atom'"
+FlatironEnv::CLI.print_table_results "Learn Editor", "cat ~/.learn-config | grep ':editor:' | grep -q 'atom'"
+FlatironEnv::CLI.delimiter
+
+## 11. Gems (more)
+FlatironEnv::CLI.print_table_results "Gem: phantomjs", "command -v gem >/dev/null 2>&1 && gem list | grep -q 'phantomjs'"
+FlatironEnv::CLI.print_table_results "Gem: nokogiri", "command -v gem >/dev/null 2>&1 && gem list | grep -q 'nokogiri'"
+FlatironEnv::CLI.delimiter
+
+## 12. Databases
+FlatironEnv::CLI.print_table_results "Installed sqlite", "command -v sqlite3 >/dev/null 2>&1"
+FlatironEnv::CLI.print_table_results "Installed PostgreSQL", "command -v postgres >/dev/null 2>&1 && postgres --version | grep -q 'postgres (PostgreSQL)'"
+FlatironEnv::CLI.print_table_results "Installed psql", "command -v psql >/dev/null 2>&1 && psql --version | grep -q 'psql (PostgreSQL)'"
+FlatironEnv::CLI.delimiter
+
+## 13. Rails
+FlatironEnv::CLI.print_table_results "Installed Rails", "command -v rails >/dev/null 2>&1 && rails --version | grep -q 'Rails'"
+FlatironEnv::CLI.print_table_results "Gem: rails", "command -v gem >/dev/null 2>&1 && gem list | grep -q 'rails'"
+FlatironEnv::CLI.delimiter
+
+## 14. Node Version Manager (nvm)
+# https://unix.stackexchange.com/questions/184508/nvm-command-not-available-in-bash-script
+# https://stackoverflow.com/questions/39190575/bash-script-for-changing-nvm-node-version
+FlatironEnv::CLI.print_table_results "Installed NVM", "command -v nvm >/dev/null 2>&1 && nvm --version | grep -q '[0-9]*\.[0-9]*\.[0-9]*'"
+FlatironEnv::CLI.print_table_results "Installed Node", "command -v node | grep -q '/Users/.*/.nvm/versions/node/v.*/bin/node'"
+# FlatironEnv::CLI.print_table_results "Default Node (10.x)" 'command -v nvm >/dev/null 2>&1 && nvm version default | grep -q "v10"'
+FlatironEnv::CLI.print_table_results "Default Node (6.11.2)", 'command -v nvm >/dev/null 2>&1 && nvm version default | grep -q "v6.11.2"'
+FlatironEnv::CLI.delimiter
+
+## 15. Java
+# https://stackoverflow.com/questions/36388348/check-if-java-installed-with-bash
+FlatironEnv::CLI.print_table_results "Installed Java", 'command -v java >/dev/null 2>&1 && java -version 2>&1 >/dev/null | grep -q "java version"'
+FlatironEnv::CLI.delimiter
+
+## 16. Google Chrome
+# https://unix.stackexchange.com/questions/63387/single-command-to-check-if-file-exists-and-print-custom-message-to-stdout
+FlatironEnv::CLI.print_table_results "Installed Google Chrome", "[ -f /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome ] && /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --version | grep -q 'Google Chrome'"
+FlatironEnv::CLI.delimiter
+
+## 17. Slack
+FlatironEnv::CLI.print_table_results "Installed Slack", "[ -f /Applications/Slack.app/Contents/MacOS/Slack ] && /Applications/Slack.app/Contents/MacOS/Slack --version | grep -q ''"
+FlatironEnv::CLI.delimiter
+
+
+## Student Configuration
+FlatironEnv::CLI.configuration_header
+FlatironEnv::CLI.delimiter
+
+## 5. git
+puts "Github"
+FlatironEnv::CLI.print_data_row "Username", "command -v git >/dev/null 2>&1 && git config --list | grep 'github.user=' | sed 's/github.user=//g'"
+FlatironEnv::CLI.print_data_row "Email", "command -v git >/dev/null 2>&1 && git config --list | grep 'github.email=' | sed 's/github.email=//g'"
+FlatironEnv::CLI.delimiter
+
+## 9. Learn
+# https://stackoverflow.com/questions/369758/how-to-trim-whitespace-from-a-bash-variable
+puts "Learn"
+FlatironEnv::CLI.print_data_row "Name", "command -v learn >/dev/null 2>&1 && learn whoami | grep 'Name:' | sed 's/Name://g' | sed -e 's/^[[:space:]]*//'"
+FlatironEnv::CLI.print_data_row "Username", "command -v learn >/dev/null 2>&1 && learn whoami | grep 'Username:' | sed 's/Username://g' | sed -e 's/^[[:space:]]*//'"
+FlatironEnv::CLI.print_data_row "Email", "command -v learn >/dev/null 2>&1 && learn whoami | grep 'Email:' | sed 's/Email://g' | sed -e 's/^[[:space:]]*//'"
+FlatironEnv::CLI.delimiter
+ 
